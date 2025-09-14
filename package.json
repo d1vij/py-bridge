@@ -1,27 +1,39 @@
 {
-  "name": "py-bridge",
-  "version": "1.0.0",
-  "description": "Simple way to call existing python functions and get their return value in nodejs environment",
-  "main": "./dist/ts/exec.js",
+  "name": "@d1vij/py-bridge",
+  "version": "1.1.0",
+  "description": "Simple Node.js library to call existing Python functions and get their return value in Node.js environment",
+  "main": "./dist/ts/index.js",
+  "type": "module",
   "scripts": {
     "clean": "rimraf dist",
     "build:ts": "tsc",
     "build:py": "cpy \"src/py/**/*\" dist/py",
     "build": "npm run clean && npm run build:ts && npm run build:py",
+    "prepare": "npm run build",      
     "postinstall": "node ./dist/scripts/postinstall.js"
   },
   "files": [
     "dist",
     "requirements.txt"
   ],
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "python",
+    "bridge",
+    "node",
+    "typescript"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
-    "@types/express": "^5.0.3",
     "cpy-cli": "^6.0.0",
     "express": "^5.1.0",
     "rimraf": "^6.0.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "typescript": "^5.6.0"
   }
 }

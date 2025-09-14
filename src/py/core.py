@@ -33,7 +33,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--path")
     parser.add_argument("--entry")
-    parser.add_argument("--port", default="9000")
+    parser.add_argument("--port")
     args = parser.parse_args()
 
     PING_URL = f"http://localhost:{args.port}/ping"
