@@ -74,7 +74,8 @@ install("matplotlib seaborn");
 install("-r ~/path/to/my/requirements.txt")
 ```
 
-> [!IMPORTANT] Although scripts can be executed without modifications, only JSON-serializable data can be returned as payloads.
+> [!IMPORTANT]
+> Although scripts can be executed without modifications, only JSON-serializable data can be returned as payloads.
 Returning non-serializable Python objects will raise an exception.
 To avoid this, wrap return values in a serializable form (e.g., str, list, or dict).
 
