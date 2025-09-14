@@ -2,7 +2,7 @@ import argparse
 import json
 import requests
 
-def execute(filepath:str, function_name:str, port:str, PING_URL:str):
+def execute(filepath:str, function_name:str, PING_URL:str):
     from function_loader import get_function_from_modulepath
     from os import path
 
@@ -40,7 +40,7 @@ def main():
     PAYLOAD_URL = f"http://localhost:{args.port}/payload"
 
     try:
-        results = execute(args.path, args.entry, args.port, PING_URL)
+        results = execute(args.path, args.entry, PING_URL)
         response = requests.post(PAYLOAD_URL, json={
             "success": True,
             "payload": results

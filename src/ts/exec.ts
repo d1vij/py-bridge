@@ -14,7 +14,7 @@ export const pyExec =
     ? path.join(__dirname, path.join("..","pyvenv","Scripts","python.exe"))
     : path.join(__dirname, path.join("..","/pyvenv/bin/python"));
 
-export function exec(filepath: string, functionName: string, kwargs: Object, port: string = "0"): Promise<ExecResults> {
+export function exec(filepath: string, functionName: string, kwargs: Object = {}, port: string = "0"): Promise<ExecResults> {
     
     let pyCorePath = "../py/core.py"
     pyCorePath = path.join(__dirname,pyCorePath);
@@ -42,7 +42,8 @@ export function exec(filepath: string, functionName: string, kwargs: Object, por
             resolve(request.body);
         })
 
-        const pyProcess = spawn(pyExec, [pyCorePath, "--path", filepath, "--entry", functionName, "--port", port]);
+        const listeningPort:string = (server.address() as import("net").AddressInfo).port.toString();
+        const pyProcess = spawn(pyExec, [pyCorePath, "--path", filepath, "--entry", functionName, "--port", listeningPort]);
         pyProcess.on("error", (err) => {
             resolve({
                 success: false,
