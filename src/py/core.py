@@ -1,5 +1,4 @@
 import argparse
-import json
 import requests
 
 def execute(filepath:str, function_name:str, PING_URL:str):
