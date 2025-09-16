@@ -4,17 +4,17 @@ import path from "path";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-export type ExecResults = {
+export type ExecResults<T> = {
     success: boolean,
     errorMsg?: string,
-    payload?: string
+    payload?: T
 }
 export const pyExec =
   process.platform === "win32"
     ? path.join(__dirname, path.join("..","pyvenv","Scripts","python.exe"))
     : path.join(__dirname, path.join("..","/pyvenv/bin/python"));
 
-export function exec(filepath: string, functionName: string, kwargs: Object = {}, port: string = "0"): Promise<ExecResults> {
+export function exec<T = string>(filepath: string, functionName: string, kwargs: Object = {}, port: string = "0"): Promise<ExecResults<T>> {
     
     let pyCorePath = "../py/core.py"
     pyCorePath = path.join(__dirname,pyCorePath);
@@ -51,5 +51,4 @@ export function exec(filepath: string, functionName: string, kwargs: Object = {}
             })
         })
     })
-}  
-
+}
