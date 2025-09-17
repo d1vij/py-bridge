@@ -21,20 +21,20 @@ npm install @d1vij/py-bridge
 
 ```ts
 // Signature
-export function exec(
+export function exec<T>( // Type defaults to string if not passed, and has no runtime effect
   filepath: string,      // Absolute path to the Python module
   functionName: string,  // Name of the function to run (must exist in the module)
   kwargs: Object = {},   // Keyword arguments, passed as foo(**kwargs)
   port?: string          // Optional port for Node-Python runtimes communication. (random if not specified)
-): Promise<ExecResults>;
+): Promise<ExecResults<T>>;
 ```
 
 with `ExecResults` being defined as 
 ```ts
-export type ExecResults = {
+export type ExecResults<T> = {
     success: boolean;   // whether the execution succeeded
     errorMsg?: string;  // exception raised (if any)
-    payload?: string;   // return value of the Python function
+    payload?: T;   // return value of the Python function
 };
 ```
 
