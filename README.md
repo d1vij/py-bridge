@@ -1,10 +1,10 @@
 # PyBridge
 PyBridge is a simple Node.js library for running Python functions without modifying your existing Python scripts.
 
-It automatically sets up a Python virtual environment local to the nodejs enviornment upon installation.
-
+It uses your existing python environment to run the scripts.
+ 
 > [!NOTE]
-> The only python dependency is the `requests` library. Without it the python runtime cannot  communicate to the nodejs runtime.
+> The only Python dependency required is the requests module, which enables communication between the Python runtime and the ? > Node.js runtime. Although the Python runtime can automatically install this module if it is not found, it is strongly ?  recommended to install it in advance to avoid delays or unexpected runtime issues.
 
 ## Installation
 
@@ -17,11 +17,26 @@ npm install @d1vij/py-bridge
 ## Usage
 ### Running python functions
 
-* The core API is the `exec` function which asynchronously runs a target function from a python module and returns a promise with execution results.
+* Before running any Python script, the Python runtime must be made aware of the correct environment in order to resolve dependent modules. This is achieved by setting the absolute path to your existing environment using the pythonPath.set() method:
+
+```ts
+import { pythonPath } from "@d1vij/py-bridge";
+
+// For Unix-based environments
+pythonPath.set("/home/foo/bar/.venv/bin/python");
+
+// For Windows environments
+pythonPath.set("C:\\foo\\bar\\.venv\\scripts\\python.exe");
+
+```
+
+This configuration only needs to be set once per runtime session.
+
+* The core API is the `execute` function which asynchronously runs a target function from a python module and returns a promise with execution results.
 
 ```ts
 // Signature
-export function exec<T>( // Type defaults to string if not passed, and has no runtime effect
+export function execute<T>( // Type defaults to string if not passed, and has no runtime effect
   filepath: string,      // Absolute path to the Python module
   functionName: string,  // Name of the function to run (must exist in the module)
   kwargs: Object = {},   // Keyword arguments, passed as foo(**kwargs)
@@ -50,7 +65,7 @@ def add(x: int, y: int) -> int:
 // script.js
 import {exec} from "@d1vij/py-bridge";
 async function main(){
-    const results = await exec("~/python-scripts/calc.py", "add", {
+    const results = await execute("~/python-scripts/calc.py", "add", {
         x:10, //variables retain their datatype
         y:20
     })
@@ -61,18 +76,6 @@ main();
 
 > [!NOTE]
 > More examples in the `/examples/` folder
-
-## Using third party libraries
-
-* If your targetted function's module requires any third party library, then it must be installed to the local env of package before calling the function.
-* Libraries are pip installed via the `install` function, which takes in the name of the function
-* Installation needs to be done only once per library
-
-```ts
-install("numpy"); //numpy now installed
-install("matplotlib seaborn");
-install("-r ~/path/to/my/requirements.txt")
-```
 
 > [!IMPORTANT]
 > Although scripts can be executed without modifications, only JSON-serializable data can be returned as payloads.

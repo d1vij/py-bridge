@@ -2,22 +2,20 @@ import { spawn } from "child_process";
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import { PythonPath } from "./python-path.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
+
+export const pythonPath = new PythonPath();
 
 export type ExecResults<T> = {
     success: boolean,
     errorMsg?: string,
     payload?: T
 }
-export const pyExec =
-  process.platform === "win32"
-    ? path.join(__dirname, path.join("..","pyvenv","Scripts","python.exe"))
-    : path.join(__dirname, path.join("..","/pyvenv/bin/python"));
-
-export function exec<T = string>(filepath: string, functionName: string, kwargs: Object = {}, port: string = "0"): Promise<ExecResults<T>> {
     
-    let pyCorePath = "../py/core.py"
-    pyCorePath = path.join(__dirname,pyCorePath);
+export function execute<T = string>(filepath: string, functionName: string, kwargs: Object = {}, port: string = "0"): Promise<ExecResults<T>> {
+    
+    const pyCorePath = path.join(__dirname, "../py/core.py");
     return new Promise(resolve => {
 
         const app = express();
@@ -43,7 +41,7 @@ export function exec<T = string>(filepath: string, functionName: string, kwargs:
         })
 
         const listeningPort:string = (server.address() as import("net").AddressInfo).port.toString();
-        const pyProcess = spawn(pyExec, [pyCorePath, "--path", filepath, "--entry", functionName, "--port", listeningPort]);
+        const pyProcess = spawn(pythonPath.get(), [ pyCorePath,"--path", filepath, "--entry", functionName, "--port", listeningPort]);
         pyProcess.on("error", (err) => {
             resolve({
                 success: false,

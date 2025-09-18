@@ -1,8 +1,6 @@
-import { exec, install } from "@d1vij/py-bridge";
+import { exec, pythonPath } from "@d1vij/py-bridge";
 
-install("matplotlib");
-// install("numpy") // no need to install numpy since it was already installed once (referring to the numpy example)
-
+pythonPath.set("/home/divij/coding/repos/py-bridge/examples/weather/.venv/bin/python")
 async function main(){
     const results = await exec("plot.py", "plt_and_return_as_dataurl", {});
     if(results.success){

@@ -1,6 +1,13 @@
+import { PythonPath } from "./src/ts/python-path.ts"
+
 declare module "@d1vij/py-bridge" {
     export function exec<T = string>(filepath: string, functionName: string, kwargs: Object = {}, port: string = "0"): Promise<ExecResults<T>>;
-    export function install(name: string): void;
+    export const pythonPath: PythonPath;
+    class PythonPath {
+        private __path: string | undefined;
+        public get(): string;
+        public get(newPath: string): string;
+    }
     export type ExecResults<T> = {
         success: boolean,
         errorMsg?: string,

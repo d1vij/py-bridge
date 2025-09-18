@@ -1,7 +1,7 @@
-import {exec} from "@d1vij/py-bridge";
-import {install} from "@d1vij/py-bridge";
+import { exec, pythonPath } from "@d1vij/py-bridge";
 
-install("numpy"); //installing numpy in local venv
+pythonPath.set("/home/divij/coding/repos/py-bridge/examples/weather/.venv/bin/python")
+
 async function main(){
     const results = await exec("squared_array.py", "square", {
         nums:[1,2,3,4,5,6,7,8,9,10]

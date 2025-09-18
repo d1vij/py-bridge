@@ -1,6 +1,6 @@
-import {exec} from "@d1vij/py-bridge";
-
-exec("api.py", "get_weather", {city:"Pune"}).then(console.log);
+import { execute,pythonPath } from "../../dist/ts/execute.js";
+pythonPath.set("/home/divij/coding/repos/py-bridge/examples/weather/.venv/bin/python")
+execute("api.py", "get_weather", {city:"Pune"}).then(console.log);
 // Output
 // {
 //   success: true,

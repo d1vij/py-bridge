@@ -1,2 +1,2 @@
-export {exec} from "./exec.js";
-export {install} from "./install-dependencies.js"
+export {execute} from "./execute.js";
+export {pythonPath} from "./execute.js"
