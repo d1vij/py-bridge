@@ -62,16 +62,18 @@ def add(x: int, y: int) -> int:
 ```
 
 ```ts
-// script.js
-import {exec} from "@d1vij/py-bridge";
+// script.ts
+import {execute, pythonPath} from "@d1vij/py-bridge";
+
+pythonPath.set("/home/divij/coding/examples/add/.venv/bin/python");
 async function main(){
-    const results = await execute("~/python-scripts/calc.py", "add", {
+    const results = await execute<number>("~/python-scripts/calc.py", "add", {
         x:10, //variables retain their datatype
         y:20
     })
     //returns payload as: 30 (int)
 }
-main();
+main().catch(console.log);
 ```
 
 > [!NOTE]
