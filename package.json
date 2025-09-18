@@ -1,6 +1,6 @@
 {
   "name": "@d1vij/py-bridge",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Simple Node.js library to call existing Python functions and get their return value in Node.js environment",
   "main": "./dist/ts/index.js",
   "type": "module",
@@ -9,8 +9,7 @@
     "build:ts": "tsc",
     "build:py": "cpy \"src/py/**/*\" dist/py",
     "build": "npm run clean && npm run build:ts && npm run build:py",
-    "prepare": "npm run build",
-    "postinstall": "node ./dist/scripts/postinstall.js"
+    "prepare": "npm run build"
   },
   "files": [
     "dist",
